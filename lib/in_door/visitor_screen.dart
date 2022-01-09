@@ -1,14 +1,9 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:lottie/lottie.dart';
 import 'package:mm_app/cubit/cubit.dart';
 import 'package:mm_app/cubit/states.dart';
-import 'package:mm_app/shared/const.dart';
-
-import 'main_indoor.dart';
 
 class VisitorScreen extends StatefulWidget {
   @override
@@ -29,7 +24,20 @@ class _VisitorScreenState extends State<VisitorScreen>
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AppCubit, AppStates>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        var cubit = AppCubit.get(context);
+        // int message = int.parse(cubit.messageBuffer, radix: 2);
+
+        // print(cubit.message);
+
+        if (state is AppGetMessage) {
+          print(cubit.messageBuffer);
+          if (cubit.messageBuffer == '0') {
+            _openController.reverse();
+            isClicked = !isClicked;
+          }
+        }
+      },
       builder: (context, state) {
         var cubit = AppCubit.get(context);
 
@@ -44,16 +52,16 @@ class _VisitorScreenState extends State<VisitorScreen>
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    cubit.getMessage() == '0'
+                    cubit.messageBuffer == '2'
                         ? Text(
-                            'Door is Closed',
+                            'Door is Opened',
                             style: GoogleFonts.pacifico().copyWith(
                               color: Colors.white,
                               fontSize: 40,
                             ),
                           )
                         : Text(
-                            'Door is Open',
+                            'Door is Closed',
                             style: GoogleFonts.pacifico().copyWith(
                               color: Colors.white,
                               fontSize: 40,
@@ -68,15 +76,16 @@ class _VisitorScreenState extends State<VisitorScreen>
                           // case closed
                           isClicked = !isClicked;
                           _openController.forward();
-                          cubit.sendMessage('1');
+                          cubit.sendMessage('2');
+                          // cubit.setMessage('1');
                           print(cubit.messageBuffer);
-                          Timer(
-                            const Duration(seconds: 6),
-                            () => Consts.navigateAndFinishTo(
-                              context,
-                              MainInDoor(),
-                            ),
-                          );
+                          // Timer(
+                          //   const Duration(seconds: 6),
+                          //   () => Consts.navigateAndFinishTo(
+                          //     context,
+                          //     MainInDoor(),
+                          //   ),
+                          // );
                         }
                       },
                       child: Lottie.asset(

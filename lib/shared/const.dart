@@ -4,9 +4,10 @@ import 'package:google_fonts/google_fonts.dart';
 
 class Consts {
   static void navigateAndFinishTo(context, widget) {
-    Navigator.pushReplacement(
+    Navigator.pushAndRemoveUntil(
       context,
       MaterialPageRoute(builder: (context) => widget),
+      (route) => false,
     );
   }
 

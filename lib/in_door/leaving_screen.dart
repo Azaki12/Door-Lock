@@ -7,7 +7,7 @@ import 'package:lottie/lottie.dart';
 import 'package:mm_app/cubit/cubit.dart';
 import 'package:mm_app/cubit/states.dart';
 import 'package:mm_app/helpers/cache_helper.dart';
-import 'package:mm_app/in_door/main_indoor.dart';
+import 'package:mm_app/home_screen.dart';
 import 'package:mm_app/shared/const.dart';
 
 class LeavingScreen extends StatefulWidget {
@@ -50,16 +50,16 @@ class _LeavingScreenState extends State<LeavingScreen>
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    cubit.getMessage() == '0'
+                    cubit.messageBuffer == '1'
                         ? Text(
-                            'Door is Closed',
+                            'Door is opened',
                             style: GoogleFonts.pacifico().copyWith(
                               color: Colors.white,
                               fontSize: 40,
                             ),
                           )
                         : Text(
-                            'Door is Open',
+                            'Door is closed',
                             style: GoogleFonts.pacifico().copyWith(
                               color: Colors.white,
                               fontSize: 40,
@@ -83,8 +83,7 @@ class _LeavingScreenState extends State<LeavingScreen>
 
                         Timer(
                           const Duration(seconds: 3),
-                          () =>
-                              Consts.navigateAndFinishTo(context, MainInDoor()),
+                          () => Consts.navigateAndFinishTo(context, Home()),
                         );
                       },
                       child: Lottie.asset(

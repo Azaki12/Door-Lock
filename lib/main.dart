@@ -4,6 +4,7 @@ import 'package:flutter_bluetooth_serial/flutter_bluetooth_serial.dart';
 import 'package:lottie/lottie.dart';
 import 'package:mm_app/cubit/cubit.dart';
 import 'package:mm_app/cubit/states.dart';
+import 'package:mm_app/home_screen.dart';
 import 'package:mm_app/shared/const.dart';
 import 'package:mm_app/shared/error_page.dart';
 import 'package:mm_app/splash_screen.dart';

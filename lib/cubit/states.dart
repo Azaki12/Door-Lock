@@ -21,3 +21,5 @@ class AppStateServerInit extends AppStates {}
 class AppGetServer extends AppStates {}
 
 class AppGetMessage extends AppStates {}
+
+class AppSetMessage extends AppStates {}

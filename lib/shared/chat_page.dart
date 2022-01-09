@@ -9,6 +9,8 @@ import 'package:mm_app/in_door/main_indoor.dart';
 import 'package:mm_app/out_door/outdoor_screen.dart';
 import 'package:mm_app/shared/const.dart';
 
+import '../home_screen.dart';
+
 class ChatPage extends StatefulWidget {
   final BluetoothDevice server;
 
@@ -42,26 +44,8 @@ class _ChatPage extends State<ChatPage> {
                   ),
                 ),
               )
-            : state is AppCreateConnectionSuccess
+            : state is AppCreateConnectionError
                 ? Scaffold(
-                    // appBar: AppBar(
-                    //   title: (isConnecting
-                    //       ? Text(
-                    //           'Connecting to ' + widget.server.name,
-                    //         )
-                    //       : Text(
-                    //           'Connected with ' + widget.server.name,
-                    //         )),
-                    // ),
-                    body: SafeArea(
-                      child: Container(
-                        padding: const EdgeInsets.all(5),
-                        width: double.infinity,
-                        child: inDoor ? MainInDoor() : OutDoorScreen(),
-                      ),
-                    ),
-                  )
-                : Scaffold(
                     backgroundColor: Colors.indigo.shade900,
                     body: Center(
                       child: Column(
@@ -81,7 +65,34 @@ class _ChatPage extends State<ChatPage> {
                               fontSize: 30,
                             ),
                           ),
+                          SizedBox(
+                            height: 40,
+                          ),
+                          ElevatedButton(
+                            onPressed: () {
+                              Consts.navigateTo(context, Home());
+                            },
+                            child: Text('Press to Choose Device'),
+                          ),
                         ],
+                      ),
+                    ),
+                  )
+                : Scaffold(
+                    // appBar: AppBar(
+                    //   title: (isConnecting
+                    //       ? Text(
+                    //           'Connecting to ' + widget.server.name,
+                    //         )
+                    //       : Text(
+                    //           'Connected with ' + widget.server.name,
+                    //         )),
+                    // ),
+                    body: SafeArea(
+                      child: Container(
+                        padding: const EdgeInsets.all(5),
+                        width: double.infinity,
+                        child: inDoor ? MainInDoor() : OutDoorScreen(),
                       ),
                     ),
                   );

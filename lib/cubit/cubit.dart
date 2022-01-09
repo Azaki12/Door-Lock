@@ -15,6 +15,31 @@ class AppCubit extends Cubit<AppStates> {
   bool isConnecting = true;
   bool get isConnected => connection != null && connection.isConnected;
   bool isDisconnecting = false;
+  int message;
+
+  int binaryToDecimal(int n) {
+    int num = n;
+    int dec_value = 0;
+
+    // Initializing base value to 1, i.e 2^0
+    int base = 1;
+
+    int temp = num;
+    while (temp != 0) {
+      int last_digit = temp % 10;
+      temp = (temp / 10).toInt();
+
+      dec_value += last_digit * base;
+
+      base = base * 2;
+    }
+    return dec_value;
+  }
+
+  void setMessage(msg) {
+    message = binaryToDecimal(int.parse(msg));
+    //emit(AppSetMessage());
+  }
 
   static AppCubit get(context) => BlocProvider.of(context);
 
@@ -31,6 +56,9 @@ class AppCubit extends Cubit<AppStates> {
   void onDataReceived(Uint8List data) {
     // Allocate buffer for parsed data
 
+    print(AsciiCodec().decode(data).toString());
+
+    messageBuffer = '';
     int backspacesCounter = 0;
     data.forEach((byte) {
       if (byte == 8 || byte == 127) {
@@ -60,6 +88,7 @@ class AppCubit extends Cubit<AppStates> {
     messageBuffer = (backspacesCounter > 0
         ? messageBuffer.substring(0, messageBuffer.length - backspacesCounter)
         : messageBuffer + dataString);
+    emit(AppGetMessage());
   }
 
   void sendMessage(String text) async {
@@ -127,6 +156,6 @@ class AppCubit extends Cubit<AppStates> {
   }
 
   getMessage() {
-    return messageBuffer;
+    return message;
   }
 }
